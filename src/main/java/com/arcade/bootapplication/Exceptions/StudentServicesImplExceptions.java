@@ -14,7 +14,7 @@ public class StudentServicesImplExceptions {
     // Applies to all methods in the service layer
     @AfterThrowing(pointcut = "execution(* com.arcade.bootapplication.service.*.*(..))", throwing = "ex")
     public void logServiceExceptions(JoinPoint joinPoint, Throwable ex) {
-        log.error("💥 Exception in {}.{}() with message: {}",
+        log.error("Exception in {}.{}() with message: {}",
                 joinPoint.getSignature().getDeclaringTypeName(),
                 joinPoint.getSignature().getName(),
                 ex.getMessage(), ex);
