@@ -24,14 +24,14 @@ public class StudentServiceImplAspect {
     // ================= Log after method completes successfully  ==============================
     @AfterReturning(pointcut = "studentServiceMethods()", returning = "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
-        log.info("✅ Method {} executed successfully, return: {}",
+        log.info("Method {} executed successfully, return: {}",
                 joinPoint.getSignature().toShortString(), result);
     }
 
     // ========================= Log if an exception is thrown ====================================
     @AfterThrowing(pointcut = "studentServiceMethods()", throwing = "ex")
     public void logAfterThrowing(JoinPoint joinPoint, Throwable ex) {
-        log.error("❌ Exception in {}: {}",
+        log.error("Exception in {}: {}",
                 joinPoint.getSignature().toShortString(), ex.getMessage(), ex);
     }
 
@@ -46,7 +46,7 @@ public class StudentServiceImplAspect {
             return result;
         } catch (Throwable ex) {
             long duration = System.currentTimeMillis() - start;
-            log.error("💥 {} failed after {} ms: {}",
+            log.error("{} failed after {} ms: {}",
                     joinPoint.getSignature().toShortString(), duration, ex.getMessage());
             throw ex;
         }
