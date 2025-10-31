@@ -10,7 +10,9 @@ import java.util.List;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Students, Long> {
-    List<Students> findByName(String name);
+
+    @Query("SELECT s FROM Students s WHERE s.name = :name")
+    List<Students> findByName(@Param("name") String name);
 
     List<Students> findByIsactiveTrue();
 

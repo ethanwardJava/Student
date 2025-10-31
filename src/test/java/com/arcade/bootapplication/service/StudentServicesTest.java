@@ -38,7 +38,7 @@ class StudentServicesTest {
      */
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         Students setupStudent = Students.builder()
                 .id(25L)
                 .name("Yara")
@@ -52,7 +52,8 @@ class StudentServicesTest {
                 .build();
 
         // Mock the repository to return the setup student when findByName is called with "Yara"
-        Mockito.when(repository.findByNameIgnoreCase("Yara")).thenReturn(List.of(setupStudent));    }
+        Mockito.when(repository.findByNameIgnoreCase("Yara")).thenReturn(List.of(setupStudent));
+    }
 
 
     //Will find the student by a valid name
