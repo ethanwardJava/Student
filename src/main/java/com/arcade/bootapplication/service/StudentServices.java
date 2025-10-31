@@ -22,4 +22,8 @@ public interface StudentServices {
     void remove(Long id);
 
     Students update(Long id, Students students);
+
+
+
+    List<Students> findByCountryWithFilter(String country, Integer minMark, Boolean activeOnly);
 }

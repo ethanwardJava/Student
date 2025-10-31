@@ -187,4 +187,16 @@ public class StudentServiceImpl implements StudentServices {
         // --- Persist the updated entity ---
         return studentRepository.save(dataBaseStudentObject);
     }
+
+
+    @Override
+    public List<Students> findByCountryWithFilter(String country, Integer minMark, Boolean activeOnly) {
+        List<Students> result = studentRepository.findByCountryWithFilter(country, minMark, activeOnly);
+        if (result == null || result.isEmpty()) {
+            throw new ResourceNotFoundException("No students found with country: " + country
+                    + ", minMark=" + minMark + ", activeOnly=" + activeOnly);
+        }
+        return result;
+    }
+
 }

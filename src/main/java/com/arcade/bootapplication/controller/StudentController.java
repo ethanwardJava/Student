@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-//Students Entity Controller
 @RestController
 @Log4j2
 @RequestMapping("/students")
 public class StudentController {
+
     private final StudentServices studentServices;
 
-    //DI
     public StudentController(StudentServices studentServices) {
         this.studentServices = studentServices;
     }
@@ -41,11 +40,10 @@ public class StudentController {
     // ==================== GET ACTIVE ====================
     @GetMapping("/active")
     public List<Students> getByIsActiveTrue() {
-        log.info("Fetching student by active | endpoint=/students/active");
+        log.info("Fetching active students | endpoint=/students/active");
         List<Students> students = studentServices.getByIsActiveTrue();
-        log.info("Found {} student(s) with isActiveTrue={}", students.size(), students);
+        log.info("Found {} active student(s)", students.size());
         return students;
-
     }
 
     // ==================== GET BY ID ====================
@@ -57,14 +55,28 @@ public class StudentController {
         return students;
     }
 
-    // ==================== GET COUNTRY ====================
+    // ==================== GET BY COUNTRY ====================
     @GetMapping("/country/{country}")
     public List<Students> getByCountry(@PathVariable String country) {
         log.info("Fetching student by country | endpoint=/students/country/{}", country);
         List<Students> students = studentServices.getByCountry(country);
-        log.info("Found {} student(s) with country={}", students.size(), country);
+        log.info("Found {} student(s) in country={}", students.size(), country);
         return students;
     }
+
+    // ==================== GET BY COUNTRY WITH FILTER ====================
+    @GetMapping("/country/{country}/filter")
+    public List<Students> getByCountryWithFilter(
+            @PathVariable String country,
+            @RequestParam(required = false) Integer minMark,
+            @RequestParam(required = false) Boolean activeOnly) {
+
+        log.info("Fetching students in country={} with minMark={} and activeOnly={}",
+                country, minMark, activeOnly);
+
+        return studentServices.findByCountryWithFilter(country, minMark, activeOnly);
+    }
+
 
     // ==================== ADD NEW ====================
     @PostMapping("/add")
@@ -80,6 +92,7 @@ public class StudentController {
         studentServices.remove(id);
         return "success";
     }
+
     // ==================== UPDATE BY ID ====================
     @PutMapping("/update/{id}")
     public Students updateStudentById(@PathVariable Long id, @RequestBody Students students) {
